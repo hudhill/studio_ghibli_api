@@ -6,6 +6,7 @@ const SearchBar = (props) => {
       <h1>Studio Ghibli Films</h1>
       <span>Search by Director: </span>
       <select onChange={props.getFilmsByDirector}>
+        <option default value="" selected disabled>Select a Director</option>
         <option value="Hayao Miyazaki">Hayao Miyazaki</option>
         <option value="Isao Takahata">Isao Takahata</option>
         <option value="Yoshifumi Kondō">Yoshifumi Kondō</option>

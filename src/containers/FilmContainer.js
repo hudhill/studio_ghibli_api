@@ -4,7 +4,8 @@ import SearchBar from '../components/SearchBar';
 
 const FilmContainer = () => {
 
-  const [films, setFilms] = useState([]);
+  const [allFilms, setAllFilms] = useState([]);
+  const [filteredFilms, setFilteredFilms] = useState([])
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -19,24 +20,17 @@ const FilmContainer = () => {
         return response.json()
       })
       .then(function(data){
-        setFilms(data)
+        setAllFilms(data)
+        setFilteredFilms(data) // intialize filtered films with all films
         setLoaded(true)
       })
-      // simplified with arrow functions and implicit return:
-      //  .then(res => res.json())
-      //  .then(data => {
-      //    setFilms(data)
-      //    setLoaded(true)
-      //  });
       .catch(error => console.log(error)
       );
   };
 
   const getFilmsByDirector = event => {
-    // this needs to reset to all films before attempting to filter
-    // tried running getFilms(), but it runs after the filter... how to prevent this?
-    const filmsByDirector = films.filter(film => film.director === event.target.value);
-    setFilms(filmsByDirector);
+    const filmsByDirector = allFilms.filter(film => film.director === event.target.value);
+    setFilteredFilms(filmsByDirector);
   };
 
   return (
@@ -44,7 +38,7 @@ const FilmContainer = () => {
       <SearchBar
         getFilmsByDirector={getFilmsByDirector} 
       />
-      {films.map(
+      {filteredFilms.map(
         film => {
           return (
             <FilmDetails
